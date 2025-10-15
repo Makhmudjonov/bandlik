@@ -34,6 +34,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 
 
 INSTALLED_APPS = [
+    'django_filters',
     "corsheaders",
     'rest_framework',
     'rest_framework_simplejwt',
@@ -124,7 +125,9 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
+
+
 
 
 # Static files (CSS, JavaScript, Images)
@@ -143,6 +146,25 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",  # default barcha view’lar auth bo‘lsin
+        "rest_framework.permissions.IsAuthenticated",
     ),
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+    ]
+}
+
+
+
+# 🟢 Swagger JWT konfiguratsiyasi
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "JWT format: **Bearer &lt;access_token&gt;**",
+        }
+    },
+    "USE_SESSION_AUTH": False,  # BasicAuth chiqmasligi uchun
 }
